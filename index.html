@@ -5,26 +5,11 @@
   <title>User Authentication Demo</title>
   <script src="https://res.cdn.office.net/teams-js/2.9.1/js/MicrosoftTeams.min.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 60%;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    #userInfo {
-      margin-top: 20px;
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 60%; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    #userInfo { margin-top: 20px; }
   </style>
 </head>
 <body>
@@ -33,24 +18,24 @@
   <div id="userInfo"></div>
 
   <script>
-    // Initialize the Microsoft Teams SDK
-    microsoftTeams.initialize();
+    document.addEventListener("DOMContentLoaded", function() {
+      // Initialize the Microsoft Teams SDK once the DOM is loaded
+      microsoftTeams.initialize();
 
-    // Add event listener to the login button
-    document.getElementById("loginBtn").addEventListener("click", function() {
-      // Trigger the authentication popup
-      microsoftTeams.authentication.authenticate({
-        url: window.location.origin + "/auth.html",  // URL of the authentication page
-        width: 600,
-        height: 535,
-        successCallback: function(result) {
-          // Parse the returned result (a JSON string) into an object
-          var user = JSON.parse(result);
-          displayUserInfo(user);
-        },
-        failureCallback: function(error) {
-          alert("Authentication failed: " + error);
-        }
+      // Add event listener to the login button after initialization
+      document.getElementById("loginBtn").addEventListener("click", function() {
+        microsoftTeams.authentication.authenticate({
+          url: window.location.origin + "/auth.html",  // URL of the authentication page
+          width: 600,
+          height: 535,
+          successCallback: function(result) {
+            var user = JSON.parse(result);
+            displayUserInfo(user);
+          },
+          failureCallback: function(error) {
+            alert("Authentication failed: " + error);
+          }
+        });
       });
     });
 
